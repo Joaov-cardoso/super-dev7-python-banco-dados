@@ -1,8 +1,8 @@
 from mysql.connector import connect
 
 def executar():
-    criar_titulo()
-    # listar_titulos()
+    # criar_titulo()
+    listar_titulos()
     # editar_titulo()
     # apagar_titulo()
 
@@ -27,7 +27,14 @@ def criar_titulo():
 
     cursor = conexao.cursor()
 
-    sql = "INSERT INTO livros (titulo, quantidade_paginas, autor, preco, isbn, descricao) VALUES (%s, %s,%s,%s,%s,%s)"
+    sql = "INSERT INTO livros (" \
+    "titulo, " \
+    "quantidade_paginas, " \
+    "autor, " \
+    "preco, " \
+    "isbn, " \
+    "descricao" \
+    ") VALUES (%s, %s,%s,%s,%s,%s)"
     dados = (titulo, paginas, autor, preco_float, isbn, descricao)
 
     cursor.execute(sql, dados)
@@ -60,16 +67,33 @@ def listar_titulos():
         id = registro[0]
         titulo = registro[1]
         quantidade_paginas = registro[2]
-        print("ID:", id, "\tTitulo: ", titulo, "\tQuantidade de Páginas: ", quantidade_paginas)
+        autor = registro[3]
+        preco = registro[4]
+        isbn = registro[5]
+        descricao = registro[6]
+        print(
+            "ID:", id, 
+            "\tTitulo: ", titulo, 
+            "\tQuantidade de Páginas: ", quantidade_paginas, 
+            "\tAutor: ", autor, 
+            "\tPreço: ", preco, 
+            "\tISBN: ", isbn, 
+            "\tDescrição: ", descricao
+        )
 
 
 def editar_titulo():
     listar_titulos()
 
     id = input("Digite o id que deseja editar: ")
-    titulo = input("Digite o novo titulo: ")
-    quantidade_paginas = input("Digite a quantidade de paginas: ")
+    titulo = input("Digite o título do livro: ")
+    quantidade_paginas = input("Digite a quantidade de páginas: ")
     paginas = int(quantidade_paginas)
+    autor = input("Digite o autor do livro: ")
+    preco_str = input("Digite o preço do : ")
+    preco_float = float(preco_str)
+    isbn = input("Digite o ISNB do livro: ")
+    descricao = input("Descrição do livro: ")
 
     conexao = connect(
         host='127.0.0.1',
@@ -81,8 +105,16 @@ def editar_titulo():
 
     cursor = conexao.cursor()
 
-    sql = "UPDATE livros SET titulo=%s, quantidade_paginas=%s WHERE id = %s"
-    dados = (titulo, paginas, id)
+    sql = "UPDATE livros SET " \
+    "titulo=%s, " \
+    "quantidade_paginas=%s, " \
+    "autor=%s, " \
+    "preco=%s, " \
+    "isbn=%s, " \
+    "descricao=%s " \
+    "WHERE id = %s"
+    dados = (titulo, paginas, autor, preco_float, isbn, descricao, id)
+    
     cursor.execute(sql, dados)
 
     conexao.commit()
