@@ -1,9 +1,9 @@
 from mysql.connector import connect
 
 def executar():
-    criar_titulo()
+    # criar_titulo()
     # listar_titulos()
-    # editar_titulo()
+    editar_titulo()
     # apagar_titulo()
 
 
@@ -62,6 +62,8 @@ def editar_titulo():
 
     id = input("Digite o id que deseja editar: ")
     titulo = input("Digite o novo titulo: ")
+    quantidade_paginas = input("Digite a quantidade de paginas: ")
+    paginas = int(quantidade_paginas)
 
     conexao = connect(
         host='127.0.0.1',
@@ -73,8 +75,8 @@ def editar_titulo():
 
     cursor = conexao.cursor()
 
-    sql = "UPDATE livros SET titulo=%s WHERE id = %s"
-    dados = (titulo, id)
+    sql = "UPDATE livros SET titulo=%s, quantidade_paginas=%s WHERE id = %s"
+    dados = (titulo, paginas, id)
     cursor.execute(sql, dados)
 
     conexao.commit()
