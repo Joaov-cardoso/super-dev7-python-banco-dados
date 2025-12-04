@@ -1,8 +1,8 @@
 from mysql.connector import connect
 
 def executar():
-    # criar_titulo()
-    listar_titulos()
+    criar_titulo()
+    # listar_titulos()
     # editar_titulo()
     # apagar_titulo()
 
@@ -11,6 +11,11 @@ def criar_titulo():
     titulo = input("Digite o título do livro: ")
     quantidade_paginas = input("Digite a quantidade de páginas: ")
     paginas = int(quantidade_paginas)
+    autor = input("Digite o autor do livro: ")
+    preco_str = input("Digite o preço do : ")
+    preco_float = float(preco_str)
+    isbn = input("Digite o ISNB do livro: ")
+    descricao = input("Descrição do livro: ")
 
     conexao = connect(
         host='127.0.0.1',
@@ -22,8 +27,8 @@ def criar_titulo():
 
     cursor = conexao.cursor()
 
-    sql = "INSERT INTO livros (titulo, quantidade_paginas) VALUES (%s, %s)"
-    dados = (titulo, paginas)
+    sql = "INSERT INTO livros (titulo, quantidade_paginas, autor, preco, isbn, descricao) VALUES (%s, %s,%s,%s,%s,%s)"
+    dados = (titulo, paginas, autor, preco_float, isbn, descricao)
 
     cursor.execute(sql, dados)
 
