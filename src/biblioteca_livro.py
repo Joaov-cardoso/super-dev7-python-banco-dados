@@ -2,8 +2,8 @@ from mysql.connector import connect
 
 def executar():
     # criar_titulo()
-    # listar_titulos()
-    editar_titulo()
+    listar_titulos()
+    # editar_titulo()
     # apagar_titulo()
 
 
@@ -54,7 +54,8 @@ def listar_titulos():
     for registro in registros:
         id = registro[0]
         titulo = registro[1]
-        print("ID:", id, "\tTitulo: ", titulo)
+        quantidade_paginas = registro[2]
+        print("ID:", id, "\tTitulo: ", titulo, "\tQuantidade de Páginas: ", quantidade_paginas)
 
 
 def editar_titulo():
